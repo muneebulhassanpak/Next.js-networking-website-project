@@ -1,0 +1,19 @@
+.header {
+  background-color: #2b2b2b;
+  position: sticky;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+.header-customizer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1rem;
+}
+
+.logo {
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
