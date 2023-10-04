@@ -25,7 +25,7 @@ const EventItem = ({
   return (
     <li className={styles["item-container"]}>
       <div className={styles["itemImageDiv"]}>
-        <img src={image} alt={altText} className={styles["itemImage"]} />
+        <img src={`/${image}`} alt={altText} className={styles["itemImage"]} />
       </div>
       <div className={styles["itemContent"]}>
         <h2>{title}</h2>
