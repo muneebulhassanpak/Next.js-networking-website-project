@@ -1,10 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import { getFeaturedEvents } from "@/dummy-data";
 import Eventlist from "@/components/events/event-list";
 
-const FeaturedEvents = () => {
-  const events = getFeaturedEvents();
+const FeaturedEvents = (props) => {
+  const events = props.events;
   return (
     <>
       <Eventlist items={events} />
@@ -13,3 +11,29 @@ const FeaturedEvents = () => {
 };
 
 export default FeaturedEvents;
+
+export async function getStaticProps() {
+  const response = await fetch(
+    "https://next-js-blog-app-with-max-default-rtdb.firebaseio.com/blogs.json"
+  );
+  const data = await response.json();
+  const transformedData = [];
+  for (const key in data) {
+    if (data[key].isFeatured == true) {
+      transformedData.push({
+        id: key,
+        title: data[key].title,
+        description: data[key].description,
+        date: data[key].date,
+        location: data[key].location,
+        isFeatured: data[key].isFeatured,
+        image: data[key].image,
+      });
+    }
+  }
+  return {
+    props: {
+      events: transformedData,
+    },
+  };
+}
