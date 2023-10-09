@@ -1,5 +1,6 @@
 import React from "react";
 import Eventlist from "@/components/events/event-list";
+import { fetchStaticData } from "@/utils/data-extraction";
 
 const FeaturedEvents = (props) => {
   const events = props.events;
@@ -13,27 +14,12 @@ const FeaturedEvents = (props) => {
 export default FeaturedEvents;
 
 export async function getStaticProps() {
-  const response = await fetch(
-    "https://next-js-blog-app-with-max-default-rtdb.firebaseio.com/blogs.json"
-  );
-  const data = await response.json();
-  const transformedData = [];
-  for (const key in data) {
-    if (data[key].isFeatured == true) {
-      transformedData.push({
-        id: key,
-        title: data[key].title,
-        description: data[key].description,
-        date: data[key].date,
-        location: data[key].location,
-        isFeatured: data[key].isFeatured,
-        image: data[key].image,
-      });
-    }
-  }
+  const filter = "featured";
+  const transformedData = await fetchStaticData(filter);
   return {
     props: {
       events: transformedData,
     },
+    revalidate: 43200,
   };
 }
